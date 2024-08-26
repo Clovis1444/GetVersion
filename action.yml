@@ -18,12 +18,12 @@ inputs:
         default: false
     tag_prefix:
         description: "Tag prefix to search for existing tags. Default value is 'v'"
-        default: 'v'
+        default: "v"
     tag_postfix:
         description: "Tag postfix to search for existing tags. Default value is ''"
-        default: ''
+        default: ""
 outputs:
-    project_version: 
+    project_version:
         description: "Project version"
         value: ${{steps.get_version.outputs.project_version}}
     exists:
@@ -33,23 +33,23 @@ runs:
     using: "composite"
     steps:
         - name: Checkout
-        if: ${{inputs.checkout == "true"}}
-        uses: actions/checkout@v4
-        with:
-            sparse-checkout: ${{inputs.file_to_read}}
+          if: ${{inputs.checkout == "true"}}
+          uses: actions/checkout@v4
+          with:
+              sparse-checkout: ${{inputs.file_to_read}}
 
         - name: Get version
-        id: get_version
-        run: |
+          id: get_version
+          run: |
               PROJECT_VER="$(grep "${{inputs.line_pattern}}" ${{inputs.file_to_read}} | grep -o '${{inputs.version_pattern}}')"
               PROJECT_VER="project_version=$PROJECT_VER"
               echo $PROJECT_VER >> "$GITHUB_OUTPUT"
               echo $PROJECT_VER
-        shell: bash
+          shell: bash
 
         - name: Check tag
-        uses: mukunku/tag-exists-action@v1.6.0
-        id: check_tag
-        with:
-            tag: ${{inputs.tag_prefix}}${{steps.get_version.outputs.project_version}}${{inputs.tag_postfix}}
-            repo: ${{inputs.repo}}
+          uses: mukunku/tag-exists-action@v1.6.0
+          id: check_tag
+          with:
+              tag: ${{inputs.tag_prefix}}${{steps.get_version.outputs.project_version}}${{inputs.tag_postfix}}
+              repo: ${{inputs.repo}}
