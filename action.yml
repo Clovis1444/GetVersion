@@ -37,6 +37,7 @@ runs:
           uses: actions/checkout@v4
           with:
               sparse-checkout: ${{inputs.file_to_read}}
+              repository: ${{inputs.repo}}
 
         - name: Get version
           id: get_version
@@ -53,10 +54,3 @@ runs:
           with:
               tag: ${{inputs.tag_prefix}}${{steps.get_version.outputs.project_version}}${{inputs.tag_postfix}}
               repo: ${{inputs.repo}}
-
-        - name: Debug outputs
-          run: |
-              echo OUTPUTS:
-              echo project_version=${{outputs.project_version}}
-              echo exists=${{outputs.exists}}
-          shell: bash
