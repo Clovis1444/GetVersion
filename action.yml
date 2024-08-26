@@ -32,10 +32,11 @@ outputs:
 runs:
     using: "composite"
     steps:
+        - name: Checkout
         if: ${{inputs.checkout == "true"}}
         uses: actions/checkout@v4
         with:
-          sparse-checkout: ${{inputs.file_to_read}}
+            sparse-checkout: ${{inputs.file_to_read}}
 
         - name: Get version
         id: get_version
@@ -50,5 +51,5 @@ runs:
         uses: mukunku/tag-exists-action@v1.6.0
         id: check_tag
         with:
-          tag: ${{inputs.tag_prefix}}${{steps.get_version.outputs.project_version}}${{inputs.tag_postfix}}
-          repo: ${{inputs.repo}}
+            tag: ${{inputs.tag_prefix}}${{steps.get_version.outputs.project_version}}${{inputs.tag_postfix}}
+            repo: ${{inputs.repo}}
