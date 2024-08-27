@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "MyExt",
+    "version": "2.0.6-beta",
+    "description": "Myext description.",
+    "icons": {
+        "48": "icons/icon-48.png"
+    },
+    "permissions": [
+        "tabs"
+    ],
+    "background": {
+        "scripts": [
+            "src/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.google.com/*"
+            ],
+            "js": [
+                "src/content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "icons/icon-48.png"
+    ]
+}

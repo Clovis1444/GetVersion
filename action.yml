@@ -1,33 +1,34 @@
 name: "Get version"
-description: "Get project version from file"
+description: "Get project version from a file"
 inputs:
     file_to_read:
         description: "File that contains project version"
         required: true
     line_pattern:
-        description: "Grep patter to a line, that contains a project version"
+        description: "RegEx pattern to a line, that contains a project version"
         required: true
     version_pattern:
-        description: "Grep pattern to a version"
+        description: "RegEx pattern to a version. Default value is '[0-9]\+\.[0-9]\+\.[0-9]\+'."
         default: '[0-9]\+\.[0-9]\+\.[0-9]\+'
     repo:
-        description: "Repository name with owner"
+        description: "Repository name with owner. Default value is the current repository."
         default: ${{ github.repository }}
     checkout:
-        description: "Whether or not to checkout the file"
+        description: "Whether or not to checkout the file. Default value is false."
+        type: boolean
         default: false
     tag_prefix:
-        description: "Tag prefix to search for existing tags. Default value is 'v'"
+        description: "Tag prefix to search for existing tags. Default value is 'v'."
         default: "v"
     tag_postfix:
-        description: "Tag postfix to search for existing tags. Default value is ''"
+        description: "Tag postfix to search for existing tags. Default value is ''."
         default: ""
 outputs:
     project_version:
-        description: "Project version"
+        description: "Project version."
         value: ${{steps.get_version.outputs.project_version}}
     exists:
-        description: "Returns true if tag with the current version already exists"
+        description: "Returns true if tag with the current version already exists."
         value: ${{steps.check_tag.outputs.exists}}
 runs:
     using: "composite"
