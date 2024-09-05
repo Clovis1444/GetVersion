@@ -93,3 +93,17 @@ jobs:
               with:
                   expected: "228.0.1.12"
                   actual: ${{ steps.package.outputs.project_version }}
+
+            # custom_command
+            - name: Cargo.toml
+              uses: Clovis1444/GetVersion@main
+              id: cargo
+              with:
+                  file_to_read: tests/samples/Cargo.toml
+                  line_pattern: ""
+                  custom_command: grep -A 2 '\[package\]' tests/samples/Cargo.toml | awk -F\" '/version/ {print $2}'
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "2.2.3"
+                  actual: ${{ steps.cargo.outputs.project_version }}
