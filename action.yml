@@ -44,7 +44,7 @@ runs:
         - name: Get version
           id: get_version
           run: |
-              PROJECT_VER="$(grep '${{inputs.line_pattern}}' ${{inputs.file_to_read}} | grep -o '${{inputs.version_pattern}}')"
+              PROJECT_VER="$(grep '${{inputs.line_pattern}}' '${{inputs.file_to_read}}' | grep -o '${{inputs.version_pattern}}')"
               PROJECT_VER="project_version=$PROJECT_VER"
               echo $PROJECT_VER >> "$GITHUB_OUTPUT"
               echo $PROJECT_VER
