@@ -62,6 +62,7 @@ runs:
               PROJECT_VER="project_version=$PROJECT_VER"
               echo $PROJECT_VER >> "$GITHUB_OUTPUT"
               echo $PROJECT_VER
+          shell: bash
 
         - name: Check tag
           uses: mukunku/tag-exists-action@v1.6.0
