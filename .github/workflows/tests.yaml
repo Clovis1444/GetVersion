@@ -11,16 +11,59 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
               with:
-                  sparse-checkout: tests
+                  sparse-checkout: tests/samples
 
             - name: DEBUG
-              run: (cd ./tests/samples && ls -l1)
+              run: ls -l1
 
+            # Checkout test && existence of tag with default prefix check
+            - name: Version checkout
+              uses: Clovis1444/GetVersion@main
+              id: version_checkout
+              with:
+                  file_to_read: "tests/sample to checkout/version.txt"
+                  line_pattern: "version="
+                  checkout: true
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "0.0.12"
+                  actual: ${{ steps.version_checkout.outputs.project_version }}
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "true"
+                  actual: ${{ steps.version_checkout.outputs.exists }}
+
+            # Checkout from other repo && tag existence in other repo
+            - name: Other repo checkout
+              uses: Clovis1444/GetVersion@main
+              id: repo_checkout
+              with:
+                  file_to_read: manifest.json
+                  line_pattern: '"version":'
+                  checkout: true
+                  repo: Clovis1444/KPFB-firefox
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "0.0.3"
+                  actual: ${{ steps.repo_checkout.outputs.project_version }}
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "true"
+                  actual: ${{ steps.repo_checkout.outputs.exists }}
+
+            - name: DEBUG2
+              run: ls -l1
+
+            # CMake file text
             - name: CMakeLists.txt
               uses: Clovis1444/GetVersion@main
               id: CMakeLists
               with:
-                  file_to_read: tests/samples/CMakeLists.txt
+                  file_to_read: samples/CMakeLists.txt
                   line_pattern: "project(init"
 
             - uses: nick-fields/assert-action@v2
@@ -33,7 +76,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: manifest
               with:
-                  file_to_read: tests/samples/manifest.json
+                  file_to_read: samples/manifest.json
                   line_pattern: '"version":'
                   version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+-[a-z]\+'
 
@@ -47,7 +90,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: package
               with:
-                  file_to_read: tests/samples/package.json
+                  file_to_read: samples/package.json
                   line_pattern: '"version":'
                   version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+'
 

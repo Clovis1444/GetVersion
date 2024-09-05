@@ -1,6 +1,6 @@
-# Content
+# Table of contents
 
--   [Content](#content)
+-   [Table of contents](#table-of-contents)
 -   [About](#about)
 -   [Inputs](#inputs)
 -   [Outputs](#outputs)
@@ -48,7 +48,7 @@ RegEx pattern to a line, that contains project version.
 
 ## `repo`
 
-Repository name with owner. If you are using this repo you should mark [`checkout`](#checkout) option as **true**.
+Repository name with owner. If you are using this you should mark [`checkout`](#checkout) option as **true**.
 
 **Default value**: `${{ github.repository }}`
 
