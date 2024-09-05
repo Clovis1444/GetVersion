@@ -27,6 +27,7 @@ This action uses the following actions:
 -   [file_to_read](#file_to_readrequired)
 -   [line_pattern](#line_patternrequired)
 -   [version_pattern](#version_pattern)
+-   [custom_command](#custom_command)
 -   [repo](#repo)
 -   [checkout](#checkout)
 -   [tag_prefix](#tag_prefix)
@@ -45,6 +46,12 @@ RegEx pattern to a line, that contains project version.
 RegEx pattern to a line, that contains project version.
 
 **Default value**: `[0-9]\+\.[0-9]\+\.[0-9]\+`
+
+## `custom_command`
+
+Execute your own command to determine project version. When using this the following inputs are ignored: `line_pattern`, `version_pattern`.
+
+**Default value**: ` `
 
 ## `repo`
 
@@ -85,9 +92,14 @@ Returns true if tag with the current version already exists.
 
 # Example usages
 
+All examples presented use `Clovis1444/GetVersion@main` action. `@main` stands for _last commit_. It is highly recommended to use the **latest release version** of the action.
+
+For example, if the **last release version** is **_v0.0.12_** use `Clovis1444/GetVersion@v0.0.12`.
+
 -   [Minimalistic use case](#minimalistic-use-case)
 -   [Check if tag exists](#check-if-tag-exists)
 -   [Custom version pattern](#custom-version-pattern)
+-   [Custom command](#custom-command)
 -   [Checkout from other repo](#checkout-from-other-repo)
 -   [Search for tag with prefix and postfix](#search-for-tag-with-prefix-and-postfix)
 
@@ -181,6 +193,52 @@ include(CPack)
 ### Output
 
 **steps.get_version.outputs.project_version**: `228.0.1.12`
+
+## Custom command
+
+### Cargo.toml
+
+```toml
+[package]
+name = "winapi_app"
+version = "2.2.3"
+edition = "2021"
+
+[build-dependencies]
+winres = "0.1.12"
+
+[dependencies]
+mslnk = "0.1.8"
+
+[dependencies.windows]
+version = "0.54.0"
+features = [
+    "Win32_Graphics_Gdi",
+    "Win32_System_LibraryLoader",
+    "Win32_System_DataExchange",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Foundation",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_Media_Audio",
+]
+
+```
+
+### Usage
+
+```yaml
+- uses: Clovis1444/GetVersion@main
+  id: get_version
+  with:
+      file_to_read: Cargo.toml
+      line_pattern: ""
+      custom_command: grep -A 2 '\[package\]' Cargo.toml | awk -F\" '/version/ {print $2}'
+```
+
+### Output
+
+**steps.get_version.outputs.project_version**: `2.2.3`
 
 ## Checkout from other repo
 

@@ -2,14 +2,17 @@ name: "Get version"
 description: "Get project version from a file"
 inputs:
     file_to_read:
-        description: "File that contains project version"
+        description: "File that contains project version."
         required: true
     line_pattern:
-        description: "RegEx pattern to a line, that contains a project version"
+        description: "RegEx pattern to a line, that contains a project version."
         required: true
     version_pattern:
-        description: 'RegEx pattern to a version. Default value is "[0-9]\+\.[0-9]\+\.[0-9]\+"'
+        description: 'RegEx pattern to a version. Default value is "[0-9]\+\.[0-9]\+\.[0-9]\+".'
         default: '[0-9]\+\.[0-9]\+\.[0-9]\+'
+    custom_command:
+        description: "Execute your own command to determine project version. When using this the following inputs are ignored: line_pattern, version_pattern."
+        default: ""
     repo:
         description: "Repository name with owner. Default value is the current repository."
         default: ${{ github.repository }}
@@ -42,6 +45,7 @@ runs:
               repository: ${{inputs.repo}}
 
         - name: Get version
+          if: ${{inputs.custom_command == ''}}
           id: get_version
           run: |
               PROJECT_VER="$(grep '${{inputs.line_pattern}}' '${{inputs.file_to_read}}' | grep -o '${{inputs.version_pattern}}')"
@@ -49,6 +53,15 @@ runs:
               echo $PROJECT_VER >> "$GITHUB_OUTPUT"
               echo $PROJECT_VER
           shell: bash
+
+        - name: Get version custom
+          if: ${{inputs.custom_command != ''}}
+          id: get_version
+          run: |
+              PROJECT_VER="$(${{inputs.custom_command}})"
+              PROJECT_VER="project_version=$PROJECT_VER"
+              echo $PROJECT_VER >> "$GITHUB_OUTPUT"
+              echo $PROJECT_VER
 
         - name: Check tag
           uses: mukunku/tag-exists-action@v1.6.0
