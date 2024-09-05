@@ -63,7 +63,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: CMakeLists
               with:
-                  file_to_read: samples/CMakeLists.txt
+                  file_to_read: tests/samples/CMakeLists.txt
                   line_pattern: "project(init"
 
             - uses: nick-fields/assert-action@v2
@@ -76,7 +76,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: manifest
               with:
-                  file_to_read: samples/manifest.json
+                  file_to_read: tests/samples/manifest.json
                   line_pattern: '"version":'
                   version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+-[a-z]\+'
 
@@ -90,7 +90,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: package
               with:
-                  file_to_read: samples/package.json
+                  file_to_read: tests/samples/package.json
                   line_pattern: '"version":'
                   version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+'
 
