@@ -117,7 +117,7 @@ include(CPack)
 ### Usage
 
 ```yaml
-- uses: Clovis1444/GetVersion@v0.0.12
+- uses: Clovis1444/GetVersion@main
   id: get_version
   with:
       file_to_read: CMakeLists.txt
@@ -133,7 +133,7 @@ include(CPack)
 ### Usage
 
 ```yaml
-- uses: Clovis1444/GetVersion@v0.0.12
+- uses: Clovis1444/GetVersion@main
   id: get_version
   with:
       file_to_read: CMakeLists.txt
@@ -170,7 +170,7 @@ include(CPack)
 ### Usage
 
 ```yaml
-- uses: Clovis1444/GetVersion@v0.0.12
+- uses: Clovis1444/GetVersion@main
   id: get_version
   with:
       file_to_read: package.json
@@ -187,10 +187,10 @@ include(CPack)
 ### Usage
 
 ```yaml
-- uses: Clovis1444/GetVersion@v0.0.12
+- uses: Clovis1444/GetVersion@main
   id: get_version
   with:
-      file_to_read: tests/CMakeLists.txt
+      file_to_read: tests/samples/CMakeLists.txt
       line_pattern: project(init VERSION
       checkout: true
       repo: Clovis1444/GetVersion
@@ -203,7 +203,7 @@ Assuming you search for a tag with the following pattern: `v<project_version>-be
 ### Usage
 
 ```yaml
-- uses: Clovis1444/GetVersion@v0.0.12
+- uses: Clovis1444/GetVersion@main
   id: get_version
   with:
       file_to_read: CMakeLists.txt

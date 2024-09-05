@@ -8,7 +8,7 @@ inputs:
         description: "RegEx pattern to a line, that contains a project version"
         required: true
     version_pattern:
-        description: 'RegEx pattern to a version. Default value is "[0-9]\+\.[0-9]\+\.[0-9]\+."'
+        description: 'RegEx pattern to a version. Default value is "[0-9]\+\.[0-9]\+\.[0-9]\+"'
         default: '[0-9]\+\.[0-9]\+\.[0-9]\+'
     repo:
         description: "Repository name with owner. Default value is the current repository."

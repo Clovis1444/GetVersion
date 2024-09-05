@@ -1,0 +1,54 @@
+name: Tests
+on:
+    push:
+        branches: "main"
+
+jobs:
+    sample_tests:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: tests
+
+            - name: CMakeLists
+              uses: Clovis1444/GetVersion@main
+              id: CMakeLists
+              with:
+                  file_to_read: tests/samples/CMakeLists.txt
+                  line_pattern: "project(init"
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "0.1.0"
+                  actual: ${{ steps.CMakeLists.outputs.project_version }}
+
+            # version_pattern with postfix
+            - name: manifest.json
+              uses: Clovis1444/GetVersion@main
+              id: manifest
+              with:
+                  file_to_read: tests/samples/manifest.json
+                  line_pattern: '"version":'
+                  version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+-[a-z]\+'
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "2.0.6-beta"
+                  actual: ${{ steps.manifest.outputs.project_version }}
+
+            # version_patter with four-part version number
+            - name: package.json
+              uses: Clovis1444/GetVersion@main
+              id: package
+              with:
+                  file_to_read: tests/samples/package.json
+                  line_pattern: '"version":'
+                  version_pattern: '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+'
+
+            - uses: nick-fields/assert-action@v2
+              with:
+                  expected: "228.0.1.12"
+                  actual: ${{ steps.package.outputs.project_version }}
