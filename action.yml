@@ -34,7 +34,7 @@ runs:
     using: "composite"
     steps:
         - name: Checkout
-          if: ${{inputs.checkout}} == true
+          if: ${{inputs.checkout == 'true'}}
           uses: actions/checkout@v4
           with:
               sparse-checkout: ${{inputs.file_to_read}}
