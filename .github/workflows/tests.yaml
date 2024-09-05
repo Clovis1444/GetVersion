@@ -8,14 +8,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                  sparse-checkout: tests/samples
-
-            - name: DEBUG
-              run: ls -l1
-
             # Checkout test && existence of tag with default prefix check
             - name: Version checkout
               uses: Clovis1444/GetVersion@main
@@ -55,8 +47,11 @@ jobs:
                   expected: "true"
                   actual: ${{ steps.repo_checkout.outputs.exists }}
 
-            - name: DEBUG2
-              run: ls -l1
+            #
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: tests/samples
 
             # CMake file text
             - name: CMakeLists.txt
