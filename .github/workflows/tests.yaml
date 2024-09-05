@@ -13,7 +13,10 @@ jobs:
               with:
                   sparse-checkout: tests
 
-            - name: CMakeLists
+            - name: DEBUG
+              run: ls -l1
+
+            - name: CMakeLists.txt
               uses: Clovis1444/GetVersion@main
               id: CMakeLists
               with:
