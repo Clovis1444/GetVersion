@@ -38,6 +38,7 @@ runs:
           uses: actions/checkout@v4
           with:
               sparse-checkout: ${{inputs.file_to_read}}
+              sparse-checkout-cone-mode: false
               repository: ${{inputs.repo}}
 
         - name: Get version
