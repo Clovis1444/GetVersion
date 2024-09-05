@@ -29,7 +29,7 @@ inputs:
 outputs:
     project_version:
         description: "Project version."
-        value: ${{steps.get_version.outputs.project_version}}
+        value: ${{steps.get_version.outputs.project_version || steps.get_version_custom.outputs.project_version}}
     exists:
         description: "Returns true if tag with the current version already exists."
         value: ${{steps.check_tag.outputs.exists}}
@@ -56,7 +56,7 @@ runs:
 
         - name: Get version custom
           if: ${{inputs.custom_command != ''}}
-          id: get_version
+          id: get_version_custom
           run: |
               PROJECT_VER="$(${{inputs.custom_command}})"
               PROJECT_VER="project_version=$PROJECT_VER"
