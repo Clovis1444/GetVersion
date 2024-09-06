@@ -49,7 +49,7 @@ RegEx pattern to a line, that contains project version.
 
 ## `custom_command`
 
-Execute your own command to determine project version. When using this the following inputs are ignored: `line_pattern`, `version_pattern`.
+Execute your own command to determine project version. When using this the following inputs are ignored: `file_to_read`, `line_pattern`, `version_pattern`.
 
 **Default value**: ` `
 
@@ -231,7 +231,7 @@ features = [
 - uses: Clovis1444/GetVersion@main
   id: get_version
   with:
-      file_to_read: Cargo.toml
+      file_to_read: ""
       line_pattern: ""
       custom_command: grep -A 2 '\[package\]' Cargo.toml | awk -F\" '/version/ {print $2}'
 ```

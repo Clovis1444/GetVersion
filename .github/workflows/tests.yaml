@@ -99,7 +99,7 @@ jobs:
               uses: Clovis1444/GetVersion@main
               id: cargo
               with:
-                  file_to_read: tests/samples/Cargo.toml
+                  file_to_read: ""
                   line_pattern: ""
                   custom_command: grep -A 2 '\[package\]' tests/samples/Cargo.toml | awk -F\" '/version/ {print $2}'
 

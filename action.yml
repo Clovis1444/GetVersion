@@ -11,7 +11,7 @@ inputs:
         description: 'RegEx pattern to a version. Default value is "[0-9]\+\.[0-9]\+\.[0-9]\+".'
         default: '[0-9]\+\.[0-9]\+\.[0-9]\+'
     custom_command:
-        description: "Execute your own command to determine project version. When using this the following inputs are ignored: line_pattern, version_pattern."
+        description: "Execute your own command to determine project version. When using this the following inputs are ignored: file_to_read, line_pattern, version_pattern."
         default: ""
     repo:
         description: "Repository name with owner. Default value is the current repository."
